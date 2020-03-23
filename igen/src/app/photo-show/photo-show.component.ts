@@ -9,11 +9,17 @@ import { ImageService } from "../image.service";
 export class PhotoShowComponent implements OnInit {
   @Input() image = "";
 
-  constructor(private photoService: ImageService) {}
+  constructor(private photoService: ImageService) {
+    this.getPhoto();
+  }
 
   ngOnInit() {}
 
   getImage() {
+    this.getPhoto();
+  }
+
+  getPhoto() {
     this.photoService.get().subscribe(response => {
       this.image = response;
     });
