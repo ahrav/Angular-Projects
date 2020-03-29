@@ -1,34 +1,31 @@
-<div class="container">
-  <form (ngSubmit)="onSubmit()" #emailForm="ngForm">
-    <div class="field">
-      <label class="label">Email</label>
-      <input
-        class="input"
-        [ngClass]="{
-          'is-danger': emailControl.invalid && emailControl.touched
-        }"
-        type="email"
-        pattern=".+@.+\..+"
-        required
-        name="email"
-        [(ngModel)]="email"
-        #emailControl="ngModel"
-      />
-      <ng-container *ngIf="emailControl.invalid && emailControl.touched">
-        <div class="help is-danger" *ngIf="emailControl.errors.required">
-          You must enter an email
-        </div>
-        <div class="help is-danger" *ngIf="emailControl.errors.pattern">
-          Please enter a valid email
-        </div>
+<div class="ui container">
+  <div class="ui secondary pointing menu">
+    <a routerLink="/" class="item">Angular Email</a>
+
+    <div class="right menu">
+      <ng-container *ngIf="signedin$ | async">
+        <a class="ui item" routerLink="/inbox" routerLinkActive="active">
+          Inbox
+        </a>
+        <a class="ui item" routerLink="/signout" routerLinkActive="active">
+          Sign Out
+        </a>
+      </ng-container>
+      <ng-container *ngIf="!(signedin$ | async)">
+        <a
+          class="ui item"
+          routerLink="/"
+          [routerLinkActiveOptions]="{ exact: true }"
+          routerLinkActive="active"
+        >
+          Sign In
+        </a>
+        <a class="ui item" routerLink="/signup" routerLinkActive="active">
+          Sign Up
+        </a>
       </ng-container>
     </div>
-    <button class="button is-primary" [disabled]="emailForm.invalid">
-      Submit
-    </button>
-  </form>
+  </div>
 
-  <hr />
-  <div>Is form valid: {{ emailForm.valid }}</div>
-  <div>Form values: {{ emailForm.value | json }}</div>
+  <router-outlet></router-outlet>
 </div>
